@@ -1,0 +1,34 @@
+<link rel="import" href="../polymer/polymer.html">
+
+<!--
+`Jarkko-Coffee`
+Chat para Arquitectura de software
+
+@demo demo/index.html 
+-->
+
+<dom-module id="Jarkko-Coffee">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <h2>Hello [[prop1]]</h2>
+  </template>
+
+  <script>
+    Polymer({
+
+      is: 'Jarkko-Coffee',
+
+      properties: {
+        prop1: {
+          type: String,
+          value: 'Jarkko-Coffee',
+        },
+      },
+
+    });
+  </script>
+</dom-module>
