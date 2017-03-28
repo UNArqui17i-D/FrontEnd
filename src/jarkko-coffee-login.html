@@ -1,20 +1,35 @@
-﻿<link rel="import" href="../bower_components/paper-button/paper-button.html">
-<link rel="import" href="../bower_components/paper-input/paper-input.html">
+﻿<link href="../bower_components/paper-button/paper-button.html" rel="import">
+<link href="../bower_components/paper-input/paper-input.html" rel="import">
 
 <dom-module id="jarkko-coffee-login">
 
 	<template>
 		<style>
-		
+		:host {
+			display: block;
+		}
+		paper-button{
+			color:white;
+			margin:1em 0 0 0;
+			background-color:#402501;
+		}
+		img{
+			display: block;
+			width:50%;
+			height:10%;
+			margin:0 auto;
+		}
 		</style>
 		
-		<paper-input label="Email: " type="email" required="true">
-		</paper-input>
-		<paper-input label="Pass: " type="password" required="true">
-		</paper-input>
-		<paper-button raised id="btn">Ingresar
-		</paper-button >
-			
+			<img src="../images/logo.png" alt="Logo">
+		<form>
+			<paper-input label="Correo" type="email" required="true">
+			</paper-input>
+			<paper-input label="Clave" type="password" required="true">
+			</paper-input>
+			<paper-button raised id="btn">Ingresar
+			</paper-button>
+		</form>
 	</template>
 	
 	<script>
