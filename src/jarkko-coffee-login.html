@@ -1,6 +1,7 @@
 ﻿<link href="../bower_components/paper-button/paper-button.html" rel="import">
 <link href="../bower_components/paper-input/paper-input.html" rel="import">
 <link href="../bower_components/iron-form/iron-form.html" rel="import">
+<link href="../bower_components/iron-ajax/iron-ajax.html" rel="import">
 
 <dom-module id="jarkko-coffee-login">
 
@@ -30,6 +31,15 @@
 			<paper-button raised id="btn">Ingresar
 			</paper-button>
 		</form>
+		
+		<iron-ajax 
+			id="requestLogin"
+			url="https://api.github.com/users/erickvelasco11/repos"
+			params='{"type":"all"}'
+			handle-as="json"
+			on-response="loginResponse">
+		</iron-ajax>
+		
 	</template>
 	
 	<script>
@@ -43,7 +53,10 @@
 				this.$.btn.addEventListener("click",()=> this.sendForm())
 			},
 			sendForm: function(){
-				console.log(this.email)
+				this.$.requestLogin.generateRequest();
+			},
+			loginResponse: function(data){
+				console.log(data.detail.response);
 			}
 
 		})

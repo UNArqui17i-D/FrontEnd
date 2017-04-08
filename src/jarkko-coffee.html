@@ -1,4 +1,5 @@
-	<link rel="import" href="jarkko-coffee-login.html"/>
+<link rel="import" href="jarkko-coffee-login.html"/>
+<link rel="import" href="jarkko-coffee-register.html"/>
 
 <!--
 `Jarkko-Coffee`
@@ -20,13 +21,31 @@ Chat para Arquitectura de software
 		margin:0 auto;
 		margin-top:100px;
 	  }
+
+      jarkko-coffee-register{
+      	width:30%;
+      	background:#eee;
+      	padding:32px;
+		margin:0 auto;
+		margin-top:100px;
+	  }
     </style>
-    <jarkko-coffee-login></jarkko-coffee-login>
+    <jarkko-coffee-login {{user}}></jarkko-coffee-login>
+    <jarkko-coffee-register></jarkko-coffee-register>
   </template>
 
   <script>
     Polymer({
-      is: 'jarkko-coffee'
+      is: 'jarkko-coffee',
+      properties:{
+      	user:{
+      		type: Object,
+      		observer: "_userChanged"
+      	}
+      },
+      _userChanged: function(){
+      	console.log(this.user)
+      }
     });
   </script>
 </dom-module>
