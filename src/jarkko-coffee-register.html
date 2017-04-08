@@ -36,7 +36,7 @@
 		</form>
 		
 		<iron-ajax 
-			id="requestRegister"
+			id="registerRequest"
 			url="https://api.github.com/users/erickvelasco11/repos"
 			params='{"type":"all"}'
 			handle-as="json"
@@ -52,7 +52,10 @@
 				this.$.btn.addEventListener("click",()=> this.sendForm())
 			},
 			sendForm: function(){
-				this.$.requestRegister.generateRequest();
+				this.$.registerRequest.generateRequest();
+			},
+			registerResponse: function(data){
+				console.log(data.detail.response);
 			}
 		})
 	</script>
