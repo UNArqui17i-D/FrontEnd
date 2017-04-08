@@ -28,8 +28,13 @@
 			</paper-input>
 			<paper-input label="Clave" type="password" required="true" value="{{password}}">
 			</paper-input>
-			<paper-button raised id="btn">Ingresar
-			</paper-button>
+			<div style="width:100%;">
+				<paper-button raised id="btn">Ingresar
+				</paper-button>
+				<paper-button raised id="btnToRegister" style="background-color:transparent; float:right; box-shadow:none; color:#402501;">Registrarme
+				</paper-button>
+			</div>
+			
 		</form>
 		
 		<iron-ajax 
@@ -47,16 +52,28 @@
 			is: "jarkko-coffee-login",
 			properties: {
 				email: String,
-				password: String
+				password: String,
+				toregister:{
+					type: Object,
+					notify: true
+				},
+				user:{
+					type: Object,
+					notify: true
+				}
 			},
 			ready: function(){
 				this.$.btn.addEventListener("click",()=> this.sendForm())
+				this.$.btnToRegister.addEventListener("click",()=> this.goToRegister())
 			},
 			sendForm: function(){
 				this.$.requestLogin.generateRequest();
 			},
+			goToRegister: function(){
+				this.toregister = !this.toregister;
+			},
 			loginResponse: function(data){
-				console.log(data.detail.response);
+				this.user = data.detail.response;
 			}
 
 		})

@@ -30,21 +30,40 @@ Chat para Arquitectura de software
 		margin-top:100px;
 	  }
     </style>
-    <jarkko-coffee-login {{user}}></jarkko-coffee-login>
-    <jarkko-coffee-register></jarkko-coffee-register>
+    <jarkko-coffee-login id="login" toregister="{{toregister}}" user="{{user}}"></jarkko-coffee-login>
+    <jarkko-coffee-register id="register" tologin="{{tologin}}" user="{{user}}" style="display:none;"></jarkko-coffee-register>
   </template>
 
   <script>
     Polymer({
       is: 'jarkko-coffee',
       properties:{
+      	toregister:{
+      		type: Object,
+      		observer: "_GoToRegister"
+      	},
+      	tologin:{
+      		type: Object,
+      		observer: "_GoToLogin"
+      	},
       	user:{
       		type: Object,
-      		observer: "_userChanged"
+      		observer: "_Login"
       	}
       },
-      _userChanged: function(){
-      	console.log(this.user)
+      _GoToRegister: function(){
+        this.$.login.style.display = "none";
+      	this.$.register.style.display = "block";
+      },
+      _GoToLogin: function(){
+        this.$.login.style.display = "block";
+      	this.$.register.style.display = "none";
+      },
+      _Login: function(){
+      	console.log("Login "+this.user);
+      },
+      _Register: function(){
+      	console.log("Register "+this.user);
       }
     });
   </script>

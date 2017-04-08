@@ -31,8 +31,12 @@
 			</paper-input>
 			<paper-input label="Clave" type="password" required="true">
 			</paper-input>
-			<paper-button raised id="btn">Registrarse
-			</paper-button>
+			<div style="width:100%;">
+				<paper-button raised id="btn">Registrarse
+				</paper-button>
+				<paper-button raised id="btnToLogin" style="background-color:transparent; float:right; box-shadow:none; color:#402501;">Ingresar
+				</paper-button>
+			</div>
 		</form>
 		
 		<iron-ajax 
@@ -48,14 +52,30 @@
 	<script>
 		Polymer({
 			is: "jarkko-coffee-register",
+			properties: {
+				email: String,
+				password: String,
+				tologin:{
+					type: Object,
+					notify: true
+				},
+				user:{
+					type: Object,
+					notify: true
+				}
+			},
 			ready: function(){
 				this.$.btn.addEventListener("click",()=> this.sendForm())
+				this.$.btnToLogin.addEventListener("click",()=> this.goToLogin())
 			},
 			sendForm: function(){
 				this.$.registerRequest.generateRequest();
 			},
+			goToLogin: function(){
+				this.tologin = !this.tologin;
+			},
 			registerResponse: function(data){
-				console.log(data.detail.response);
+				this.user = data.detail.response;
 			}
 		})
 	</script>
