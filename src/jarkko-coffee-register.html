@@ -2,7 +2,7 @@
 <link href="../bower_components/paper-input/paper-input.html" rel="import">
 <link href="../bower_components/iron-form/iron-form.html" rel="import">
 
-<dom-module id="jarkko-coffee-login">
+<dom-module id="jarkko-coffee-register">
 
 	<template>
 		<style>
@@ -23,29 +23,28 @@
 		
 			<img src="../images/logo.png" alt="Logo">
 		<form is="iron-form" id="form">
-			<paper-input label="Correo" type="email" required="true" value="{{email}}">
+			<paper-input label="Correo" type="email" required="true">
 			</paper-input>
-			<paper-input label="Clave" type="password" required="true" value="{{password}}">
+			<paper-input label="Username" type="username" required="true">
 			</paper-input>
-			<paper-button raised id="btn">Ingresar
+			<paper-input label="Nombre" type="name" required="true">
+			</paper-input>
+			<paper-input label="Clave" type="password" required="true">
+			</paper-input>
+			<paper-button raised id="btn">Registrarse
 			</paper-button>
 		</form>
 	</template>
 	
 	<script>
 		Polymer({
-			is: "jarkko-coffee-login",
-			properties: {
-				email: String,
-				password: String
-			},
+			is: "jarkko-coffee-register",
 			ready: function(){
 				this.$.btn.addEventListener("click",()=> this.sendForm())
-			},
-			sendForm: function(){
-				console.log(this.email)
+				sendForm: function(){
+					//TODO Send Data for Auth
+				}
 			}
-
 		})
 	</script>
 </dom-module>

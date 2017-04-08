@@ -4,7 +4,8 @@
   "main": "Jarkko-Coffee.html",
   "dependencies": {
     "polymer": "Polymer/polymer#^1.4.0",
-    "paperelements": "PolymerElements/paper-elements"
+    "paperelements": "PolymerElements/paper-elements",
+    "ironelements": "PolymerElements/iron-elements"
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
