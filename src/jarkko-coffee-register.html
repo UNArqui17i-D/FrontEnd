@@ -23,13 +23,13 @@
 		
 			<img src="../images/logo.png" alt="Logo">
 		<form is="iron-form" id="form">
-			<paper-input label="Correo" type="email" required="true">
+			<paper-input label="Correo" type="email" required="true" value="{{email}}">
 			</paper-input>
-			<paper-input label="Username" type="username" required="true">
+			<paper-input label="Username" type="username" required="true" value="{{username}}">
 			</paper-input>
-			<paper-input label="Nombre" type="name" required="true">
+			<paper-input label="Nombre" type="name" required="true" value="{{name}}">
 			</paper-input>
-			<paper-input label="Clave" type="password" required="true">
+			<paper-input label="Clave" type="password" required="true" value="{{password}}">
 			</paper-input>
 			<div style="width:100%;">
 				<paper-button raised id="btn">Registrarse
@@ -41,8 +41,9 @@
 		
 		<iron-ajax 
 			id="registerRequest"
-			url="https://api.github.com/users/erickvelasco11/repos"
-			params='{"type":"all"}'
+			url="http://192.168.99.101:4000/authentication/resources/register"
+			method="POST"
+        	content-type="application/json"
 			handle-as="json"
 			on-response="registerResponse">
 		</iron-ajax>
@@ -54,6 +55,8 @@
 			is: "jarkko-coffee-register",
 			properties: {
 				email: String,
+				username: String,
+				name: String,
 				password: String,
 				tologin:{
 					type: Object,
@@ -68,7 +71,9 @@
 				this.$.btn.addEventListener("click",()=> this.sendForm())
 				this.$.btnToLogin.addEventListener("click",()=> this.goToLogin())
 			},
-			sendForm: function(){
+			sendForm: function(){	
+				console.log(this.email);		
+				this.$.registerRequest.body = { "email":this.email, "password": this.password, "username":this.username, "name":this.name };
 				this.$.registerRequest.generateRequest();
 			},
 			goToLogin: function(){

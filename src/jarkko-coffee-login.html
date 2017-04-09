@@ -24,7 +24,7 @@
 		
 			<img src="../images/logo.png" alt="Logo">
 		<form is="iron-form" id="form">
-			<paper-input label="Correo" type="email" required="true" value="{{email}}">
+			<paper-input label="Usuario" type="username" required="true" value="{{username}}">
 			</paper-input>
 			<paper-input label="Clave" type="password" required="true" value="{{password}}">
 			</paper-input>
@@ -38,9 +38,10 @@
 		</form>
 		
 		<iron-ajax 
-			id="requestLogin"
-			url="https://api.github.com/users/erickvelasco11/repos"
-			params='{"type":"all"}'
+			id="loginRequest"
+			url="http://192.168.99.101:4000/authentication/resources/login"
+			method="POST"
+        	content-type="application/json"
 			handle-as="json"
 			on-response="loginResponse">
 		</iron-ajax>
@@ -51,7 +52,7 @@
 		Polymer({
 			is: "jarkko-coffee-login",
 			properties: {
-				email: String,
+				username: String,
 				password: String,
 				toregister:{
 					type: Object,
@@ -63,11 +64,12 @@
 				}
 			},
 			ready: function(){
-				this.$.btn.addEventListener("click",()=> this.sendForm())
+				this.$.btn.addEventListener("click",()=> this.login())
 				this.$.btnToRegister.addEventListener("click",()=> this.goToRegister())
 			},
-			sendForm: function(){
-				this.$.requestLogin.generateRequest();
+			login: function(){
+				this.$.loginRequest.body = { "username":this.username, "password": this.password};
+				this.$.loginRequest.generateRequest();
 			},
 			goToRegister: function(){
 				this.toregister = !this.toregister;
