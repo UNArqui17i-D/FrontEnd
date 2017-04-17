@@ -71,9 +71,8 @@
 				this.$.btn.addEventListener("click",()=> this.sendForm())
 				this.$.btnToLogin.addEventListener("click",()=> this.goToLogin())
 			},
-			sendForm: function(){	
-				console.log(this.email);		
-				this.$.registerRequest.body = { "email":this.email, "password": this.password, "username":this.username, "name":this.name };
+			sendForm: function(){		
+				this.$.registerRequest.body = { "email":this.email, "password":this.password, "username":this.username, "name":this.name };
 				this.$.registerRequest.generateRequest();
 			},
 			goToLogin: function(){

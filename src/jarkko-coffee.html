@@ -1,5 +1,6 @@
 <link rel="import" href="jarkko-coffee-login.html"/>
 <link rel="import" href="jarkko-coffee-register.html"/>
+<link rel="import" href="jarkko-coffee-home.html"/>
 
 <!--
 `Jarkko-Coffee`
@@ -18,20 +19,21 @@ Chat para Arquitectura de software
       	width:30%;
       	background:#eee;
       	padding:32px;
-		margin:0 auto;
-		margin-top:100px;
+    		margin:0 auto;
+    		margin-top:100px;
 	  }
 
       jarkko-coffee-register{
       	width:30%;
       	background:#eee;
       	padding:32px;
-		margin:0 auto;
-		margin-top:100px;
+    		margin:0 auto;
+    		margin-top:100px;
 	  }
     </style>
-    <jarkko-coffee-login id="login" toregister="{{toregister}}" user="{{user}}"></jarkko-coffee-login>
-    <jarkko-coffee-register id="register" tologin="{{tologin}}" user="{{user}}" style="display:none;"></jarkko-coffee-register>
+    <jarkko-coffee-login id="login" toregister="{{toregister}}" user="{{user}}" session="{{session}}"></jarkko-coffee-login>
+    <jarkko-coffee-register id="register" tologin="{{tologin}}" user="{{user}}" session="{{session}}" style="display:none;"></jarkko-coffee-register>
+    <jarkko-coffee-home id="home" logout="{{logout}}" style="display:none;"></jarkko-coffee-home>
   </template>
 
   <script>
@@ -46,10 +48,25 @@ Chat para Arquitectura de software
       		type: Object,
       		observer: "_GoToLogin"
       	},
-      	user:{
-      		type: Object,
-      		observer: "_Login"
-      	}
+        user:{
+          type: Object,
+          observer: "_Login"
+        },
+        session:{
+          type: Object,
+          observer: "_Session"
+        },
+        logout:{
+          type: Object,
+          observer: "_Logout"
+        }
+      },
+      ready: function(){
+        if (localStorage.getItem("userId") != null) {
+          this.$.login.style.display = "none";
+          this.$.register.style.display = "none";
+          this.$.home.style.display = "block";
+        };
       },
       _GoToRegister: function(){
         this.$.login.style.display = "none";
@@ -60,11 +77,36 @@ Chat para Arquitectura de software
       	this.$.register.style.display = "none";
       },
       _Login: function(){
-      	console.log("Login "+this.user);
+      	console.log("Login "+this.user.id);
       },
       _Register: function(){
-      	console.log("Register "+this.user);
-      }
+        console.log("Register "+this.user);
+      },
+      _Session: function(){
+        if (typeof(Storage) !== "undefined") {
+            localStorage.setItem("username", this.user.username);
+            localStorage.setItem("email", this.user.email);
+            localStorage.setItem("name", this.user.name);
+            localStorage.setItem("userId", this.user.id);
+            localStorage.setItem("token", this.session.token);
+        } else {
+            alert("Sorry, your browser does not support web storage!");
+        }
+        this.$.login.style.display = "none";
+        this.$.register.style.display = "none";
+        this.$.home.style.display = "block";
+      },
+      _Logout: function(){
+        localStorage.removeItem("username");
+        localStorage.removeItem("email");
+        localStorage.removeItem("name");
+        localStorage.removeItem("userId");
+        localStorage.removeItem("token");
+
+        this.$.login.style.display = "block";
+        this.$.register.style.display = "none";
+        this.$.home.style.display = "none";
+      },
     });
   </script>
 </dom-module>

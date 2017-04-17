@@ -1,0 +1,70 @@
+﻿<link href="../bower_components/paper-button/paper-button.html" rel="import">
+<link href="../bower_components/paper-input/paper-input.html" rel="import">
+<link href="../bower_components/iron-form/iron-form.html" rel="import">
+<link href="../bower_components/iron-ajax/iron-ajax.html" rel="import">
+
+<dom-module id="jarkko-coffee-home">
+
+	<template>
+		<style>
+		:host {
+			display: block;
+		}
+		paper-button{
+			color:white;
+			margin:1em 0 0 0;
+			background-color:#402501;
+		}
+		img{
+			display: block;
+			width:50%;
+			height:10%;
+			margin:0 auto;
+		}
+		</style>
+		
+		<paper-button raised id="btnLogout">Salir
+				</paper-button>
+		
+		<iron-ajax 
+			id="logoutRequest"
+			method="DELETE"
+			on-response="logoutResponse">
+		</iron-ajax>
+		
+	</template>
+	
+	<script>
+		Polymer({
+			is: "jarkko-coffee-home",
+			properties: {
+				username: String,
+				password: String,
+				user:{
+					type: Object,
+					notify: false
+				},
+				session:{
+					type: Object,
+					notify: false
+				},
+				logout:{
+					type: Object,
+					notify: true
+				}
+			},
+			ready: function(){
+				this.$.btnLogout.addEventListener("click",()=> this.forLogout())
+			},
+			forLogout: function(){
+				this.$.logoutRequest.url = "http://192.168.99.101:4000/authentication/resources/sessions/" + localStorage.getItem("userId");
+				this.$.logoutRequest.generateRequest();
+			},
+			logoutResponse: function(data){
+				this.user = null;
+				this.session = null;
+				this.logout = !this.logout;
+			}
+		})
+	</script>
+</dom-module>

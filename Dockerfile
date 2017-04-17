@@ -10,7 +10,7 @@ EXPOSE 8000
 
 # Create app directory
 
-RUN mkdir -p /usr/src/app
-COPY . /usr/src/app
-WORKDIR /usr/src/app
+RUN mkdir -p /Jarkko-Coffee
+COPY . /Jarkko-Coffee
+WORKDIR /Jarkko-Coffee
 CMD ["polymer", "serve", "--port", "8000"]

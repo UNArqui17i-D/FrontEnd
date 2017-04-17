@@ -45,6 +45,15 @@
 			handle-as="json"
 			on-response="loginResponse">
 		</iron-ajax>
+
+		<iron-ajax 
+			id="sessionRequest"
+			url="http://192.168.99.101:4000/authentication/resources/sessions"
+			method="POST"
+        	content-type="application/json"
+			handle-as="json"
+			on-response="sessionResponse">
+		</iron-ajax>
 		
 	</template>
 	
@@ -59,6 +68,10 @@
 					notify: true
 				},
 				user:{
+					type: Object,
+					notify: true
+				},
+				session:{
 					type: Object,
 					notify: true
 				}
@@ -76,8 +89,12 @@
 			},
 			loginResponse: function(data){
 				this.user = data.detail.response;
+				this.$.sessionRequest.body = { "userId":this.user.id, "token":null};
+				this.$.sessionRequest.generateRequest();
+			},
+			sessionResponse: function(data){
+				this.session = data.detail.response;
 			}
-
 		})
 	</script>
 </dom-module>
