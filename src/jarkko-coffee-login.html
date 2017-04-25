@@ -8,7 +8,8 @@
 	<template>
 		<style>
 		:host {
-			display: block;		}
+			display: block;
+		}
 		paper-button{
 			color:white;
 			margin:1em 0 0 0;
@@ -89,7 +90,7 @@
 			},
 			loginResponse: function(data){
 				this.user = data.detail.response;
-				this.$.sessionRequest.body = { "userId":this.user.id, "token":null};
+				this.$.sessionRequest.body = { "userId":this.user.id, "token":null };
 				this.$.sessionRequest.generateRequest();
 			},
 			sessionResponse: function(data){
