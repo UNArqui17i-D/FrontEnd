@@ -1,0 +1,36 @@
+<html><head><link rel="import" href="jarkko-coffee-login.html">
+<link rel="import" href="jarkko-coffee-register.html">
+<link rel="import" href="jarkko-coffee-home.html">
+
+
+
+</head><body><dom-module id="jarkko-coffee">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      jarkko-coffee-login{
+      	width:30%;
+      	background:#eee;
+      	padding:32px;
+    		margin:0 auto;
+    		margin-top:100px;
+	  }
+
+      jarkko-coffee-register{
+      	width:30%;
+      	background:#eee;
+      	padding:32px;
+    		margin:0 auto;
+    		margin-top:100px;
+	  }
+    </style>
+    <jarkko-coffee-login id="login" toregister="{{toregister}}" user="{{user}}" session="{{session}}"></jarkko-coffee-login>
+    <jarkko-coffee-register id="register" tologin="{{tologin}}" user="{{user}}" session="{{session}}" style="display:none"></jarkko-coffee-register>
+    <jarkko-coffee-home id="home" logout="{{logout}}" style="display:none"></jarkko-coffee-home>
+  </template>
+
+  <script>Polymer({is:"jarkko-coffee",properties:{toregister:{type:Object,observer:"_GoToRegister"},tologin:{type:Object,observer:"_GoToLogin"},user:{type:Object,observer:"_Login"},session:{type:Object,observer:"_Session"},logout:{type:Object,observer:"_Logout"}},ready:function(){null!=localStorage.getItem("userId")&&(this.$.login.style.display="none",this.$.register.style.display="none",this.$.home.style.display="block")},_GoToRegister:function(){this.$.login.style.display="none",this.$.register.style.display="block"},_GoToLogin:function(){this.$.login.style.display="block",this.$.register.style.display="none"},_Login:function(){console.log("Login "+this.user.id)},_Register:function(){console.log("Register "+this.user)},_Session:function(){"undefined"!=typeof Storage?(localStorage.setItem("username",this.user.username),localStorage.setItem("email",this.user.email),localStorage.setItem("name",this.user.name),localStorage.setItem("userId",this.user.id),localStorage.setItem("token",this.session.token)):alert("Sorry, your browser does not support web storage!"),this.$.login.style.display="none",this.$.register.style.display="none",this.$.home.style.display="block"},_Logout:function(){localStorage.removeItem("username"),localStorage.removeItem("email"),localStorage.removeItem("name"),localStorage.removeItem("userId"),localStorage.removeItem("token"),this.$.login.style.display="block",this.$.register.style.display="none",this.$.home.style.display="none"}});</script>
+</dom-module>
+</body></html>

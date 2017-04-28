@@ -1,0 +1,80 @@
+<html><head><link href="../bower_components/paper-button/paper-button.html" rel="import">
+<link href="../bower_components/paper-input/paper-input.html" rel="import">
+<link href="../bower_components/iron-form/iron-form.html" rel="import">
+
+</head><body><dom-module id="jarkko-coffee-register">
+
+	<template>
+		<style>
+		:host {
+			display: block;		}
+		paper-button{
+			color:white;
+			margin:1em 0 0 0;
+			background-color:#402501;
+		}
+		img{
+			display: block;
+			width:50%;
+			height:10%;
+			margin:0 auto;
+		}
+		</style>
+		
+			<img src="../images/logo.png" alt="Logo">
+		<form is="iron-form" id="form">
+			<paper-input label="Correo" type="email" required="true" value="{{email}}">
+			</paper-input>
+			<paper-input label="Username" type="username" required="true" value="{{username}}">
+			</paper-input>
+			<paper-input label="Nombre" type="name" required="true" value="{{name}}">
+			</paper-input>
+			<paper-input label="Clave" type="password" required="true" value="{{password}}">
+			</paper-input>
+			<div style="width:100%">
+				<paper-button raised="" id="btn">Registrarse
+				</paper-button>
+				<paper-button raised="" id="btnToLogin" style="background-color:transparent; float:right; box-shadow:none; color:#402501">Ingresar
+				</paper-button>
+			</div>
+		</form>
+		
+		<iron-ajax id="registerRequest" url="http://192.168.99.101:4000/authentication/resources/register" method="POST" content-type="application/json" handle-as="json" on-response="registerResponse">
+		</iron-ajax>
+
+	</template>
+	
+	<script>
+		Polymer({
+			is: "jarkko-coffee-register",
+			properties: {
+				email: String,
+				username: String,
+				name: String,
+				password: String,
+				tologin:{
+					type: Object,
+					notify: true
+				},
+				user:{
+					type: Object,
+					notify: true
+				}
+			},
+			ready: function(){
+				this.$.btn.addEventListener("click",()=> this.sendForm())
+				this.$.btnToLogin.addEventListener("click",()=> this.goToLogin())
+			},
+			sendForm: function(){		
+				this.$.registerRequest.body = { "email":this.email, "password":this.password, "username":this.username, "name":this.name };
+				this.$.registerRequest.generateRequest();
+			},
+			goToLogin: function(){
+				this.tologin = !this.tologin;
+			},
+			registerResponse: function(data){
+				this.user = data.detail.response;
+			}
+		})
+	</script>
+</dom-module></body></html>

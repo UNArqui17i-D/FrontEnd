@@ -1,10 +1,10 @@
-﻿<link href="../bower_components/paper-button/paper-button.html" rel="import">
+<html><head><link href="../bower_components/paper-button/paper-button.html" rel="import">
 <link href="../bower_components/paper-input/paper-input.html" rel="import">
 <link href="../bower_components/iron-form/iron-form.html" rel="import">
 <link href="../bower_components/iron-ajax/iron-ajax.html" rel="import">
 <link href="../bower_components/iron-autogrow-textarea/iron-autogrow-textarea.html" rel="import">
 
-<dom-module id="jarkko-coffee-home">
+</head><body><dom-module id="jarkko-coffee-home">
 
 	<template>
 		<style>
@@ -33,39 +33,21 @@
 		}
 		</style>
 
-		<paper-button raised id="btnLogout" style="float: right;">Salir</paper-button>
+		<paper-button raised="" id="btnLogout" style="float: right">Salir</paper-button>
 
-	</br>
+	<br>
 		<iron-autogrow-textarea rows="10" placeholder="Chat" value="{{chattext}}">
 		</iron-autogrow-textarea>
 
 		<div>
-		<paper-input value="{{message}}" style="width:80%; display:block; margin:0 auto;"></paper-input>
-		<paper-button raised id="btnSend" style="width:20%; display:block; margin:0 auto;">Enviar</paper-button>
+		<paper-input value="{{message}}" style="width:80%; display:block; margin:0 auto"></paper-input>
+		<paper-button raised="" id="btnSend" style="width:20%; display:block; margin:0 auto">Enviar</paper-button>
 		</div>
 
-		<iron-ajax 
-			id="logoutRequest"
-			method="DELETE"
-			on-response="logoutResponse">
+		<iron-ajax id="logoutRequest" method="DELETE" on-response="logoutResponse">
 		</iron-ajax>
 
-		<iron-ajax 
-			id="getChatRequest"
-			url="http://192.168.99.101:4005/Chat_ms/Api/Chat/1&2"
-			on-response="getChatResponse">
-		</iron-ajax>
-
-		<iron-ajax 
-			id="sendRequest"
-			accept="*"
-			url="http://192.168.99.101:4005/Chat_ms/Api/Message"
-			method="POST"
-			non-http-request="true"
-        	content-type="application/json"
-			handle-as="json"
-			on-response="sendResponse"
-			on-error="sendError">
+		<iron-ajax id="sendRequest" url="http://192.168.99.101:4005/Chat_ms/Api/Message" method="POST" content-type="application/json" handle-as="json" on-response="sendResponse">
 		</iron-ajax>
 		
 	</template>
@@ -90,17 +72,15 @@
 				}
 			},
 			ready: function(){
-				this.chattext = "";
 				this.$.btnLogout.addEventListener("click",()=> this.evtLogout())
 				this.$.btnSend.addEventListener("click",()=> this.evtSend())
-				this.$.getChatRequest.generateRequest();
 			},
 			evtLogout: function(){
 				this.$.logoutRequest.url = "http://192.168.99.101:4000/authentication/resources/sessions/" + localStorage.getItem("userId");
 				this.$.logoutRequest.generateRequest();
 			},
 			evtSend: function(){
-				this.$.sendRequest.body = { "message":this.message, "userfrom":parseInt(localStorage.getItem("userId")), "userto":2};
+				this.$.sendRequest.body = { "message":this.message, "userfrom":localStorage.getItem("userId"), "userto":2};
 				this.$.sendRequest.generateRequest();
 			},
 			logoutResponse: function(data){
@@ -109,19 +89,9 @@
 				this.logout = !this.logout;
 			},
 			sendResponse: function(data){
-				this.chattext = this.chattext +localStorage.getItem("userId")+": "+this.message+ "\n";
-				this.message = "";
-			},
-			getChatResponse: function(data){
-				var i = 0;
-				for(i =0; i<data.detail.response.data.length; i++){
-					this.chattext = this.chattext + data.detail.response.data[i].userfrom.toString() +": "+data.detail.response.data[i].message+"\n";	
-				}
-			},
-			sendError: function(data){
 				this.chattext = this.chattext + "\n"+this.message;
 				this.message = "";
 			}
 		})
 	</script>
-</dom-module>
+</dom-module></body></html>
