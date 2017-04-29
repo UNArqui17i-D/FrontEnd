@@ -39,7 +39,7 @@ Your application is already set up to be tested via [web-component-tester](https
 
 ## CORS Problems in chrome browser
 
-For Run in Chromium Browser in Lunix use this command from terminal for open browser
+For run in Chromium Browser in Lunix use this command from terminal for open browser
 ```
 $ chromium-browser --disable-web-security --user-data-dir
 ```
@@ -50,3 +50,8 @@ For Windows, run in command prompt the command
 ```
 
 Using the URL for Chrome installation
+
+For OSx, run this command
+```
+$ open -a Google\ Chrome --args --disable-web-security --user-data-dir
+```
