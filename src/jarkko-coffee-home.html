@@ -21,8 +21,8 @@
 			background-color:#402501;
 		}
 		iron-autogrow-textarea{
-			display: block;
-	      	width:80%;
+			display: inline-block;
+	      	width:60%;
 	      	background:#ffffff;
 	      	padding:32px;
     		margin:0 auto;
@@ -36,7 +36,9 @@
 		}
 
 		paper-card{
-			width: 100%;
+			display: inline-block;
+			width: 10%;
+			height: 250px;
 		}
 		img{
 			width:80px;
@@ -53,24 +55,36 @@
 		}
 		</style>
 
+		
+		<nav class="navbar navbar-default">
+		<div class="container-fluid">
+			<div class="navbar-header">
+			<a class="navbar-brand" href="#">
+				
+			</a>
+			</div>
+		</div>
+		</nav>
 		<paper-button raised id="btnLogout" style="float: right;">Salir</paper-button>
 
 		</br>
 
-		<template id="usersElement" is="dom-repeat" items="{{users}}" as="u" style="width:20%">
-			<!--jarkko-coffe-user-card user$=[[u]]></jarkko-coffee-user-card-->
-			<paper-card elevation="1" id="card">
-		<div class="card-content layout horizontal"></div>
-		<img src$="{{https://image.freepik.com/free-icon/male-user-shadow_318-34042.jpg}}" width="80" class="flex-auto" />
-		<div class="flex-auto">
-			<span class="circle"/>
-			{{u.name}}
-		</div>
-	</paper-card>
-		</template>
+		<div>
+			<template id="usersElement" is="dom-repeat" items="{{users}}" as="u" style="width:20%">
+				<!--jarkko-coffe-user-card user$=[[u]]></jarkko-coffee-user-card-->
+				<paper-card elevation="1" id="card">
+			<div class="card-content layout horizontal"></div>
+			<img src$="{{https://image.freepik.com/free-icon/male-user-shadow_318-34042.jpg}}" width="80" class="flex-auto" />
+			<div class="flex-auto">
+				<span class="circle"/>
+				{{u.name}}
+			</div>
+				</paper-card>
+			</template>
 
-		<iron-autogrow-textarea rows="10" placeholder="Chat" value="{{chattext}}" style="enable:false;">
-		</iron-autogrow-textarea>
+			<iron-autogrow-textarea rows="8" placeholder="Chat" value="{{chattext}}" style="">
+			</iron-autogrow-textarea>
+		</div>
 
 		<div>
 		<paper-input value="{{message}}" style="width:80%; display:block; margin:0 auto;"></paper-input>
