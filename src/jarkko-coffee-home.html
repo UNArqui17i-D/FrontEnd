@@ -21,7 +21,7 @@
             <ul class="nav navbar-nav" style="float: right;">
                 <li class="dropdown">
                  
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Menú<span class="caret"></span></a>
+                    <a href="#" class="dropdown-toggle" style="margin-right:66px !important;" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Menú<span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="#">Perfil</a></li>
                         <li id="btnLobby"><a href="#">Lobby</a></li>
@@ -37,6 +37,12 @@
     <jarkko-coffee-lobby id="lobby" tochats="{{tochats}}" style="display:none;"></jarkko-coffee-lobby>
 
 
+
+	<iron-ajax 
+		id="logoutRequest"
+		method="DELETE"
+		on-response="logoutResponse">
+	</iron-ajax>
   </template>
 
   <script>
@@ -74,7 +80,13 @@
 			this.$.btnLobby.style.display = "none";
 		},
 		evtLogout: function(){
-			this.logout = !this.logout;
+			this.$.logoutRequest.url = "http://192.168.99.101:4000/authentication/resources/sessions/" + localStorage.getItem("userId");
+			this.$.logoutRequest.generateRequest();
+		},
+		logoutResponse: function(data){
+			if(data.detail.status == 200){
+				this.logout = !this.logout;
+			}
 		}
     });
   </script>

@@ -53,7 +53,7 @@
 			</div>
 
 			<div class="col-sm-10 chat_panel">
-				<iron-autogrow-textarea disabled rows="8" placeholder="Chat" value="{{chattext}}" style="">
+				<iron-autogrow-textarea disabled rows="20" placeholder="Chat" value="{{chattext}}" style="">
 				</iron-autogrow-textarea>
 				<br>
 				<div>
@@ -63,12 +63,6 @@
 			</div>
 
 		</div>
-
-		<iron-ajax 
-			id="logoutRequest"
-			method="DELETE"
-			on-response="logoutResponse">
-		</iron-ajax>
 
 		<iron-ajax 
 			id="getChatRequest"
