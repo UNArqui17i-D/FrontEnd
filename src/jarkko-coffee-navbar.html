@@ -1,7 +1,6 @@
-
-
+<script src="js/navbar.js"></script>
 <dom-module id="jarkko-coffee-navbar">
-
+    <base rel="import" type="css" href="css/navbar.css">
 	<template>
 		<style>	
 		:host {
@@ -10,52 +9,26 @@
 		
 		</style>
 		
-		<div class="bars" id="nav-action">
-            <span class="bar"> </span>
-        </div>
-
-        <nav id="nav">
-            <ul>
-                <li class="shape-circle circle-one"><a href="#">Contact</a></li>
-                <li class="shape-circle circle-two"><a href="#">Blog</a></li>
-                <li class="shape-circle circle-three"><a href="#">Work</a></li>
-                <li class="shape-circle circle-five">
-                <a href="#">Home</a>
-                </li>
-            </ul>
+		<nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                <a class="navbar-brand" href="#">
+                    <img width="140px" src="../../images/logo.png">
+                </a>
+                </div>
+            </div>
         </nav>
 
-        <article class="container">
-            <h1>A<br> Circular<br> Navbar</h1>
-            <p> Inspired by Google Material Design and Circles</p>
-            <a href="http://codepen.io/alexakasanjeev/pen/RPxGXY" target="_blank">Pair it With Horizontal Line Break</a>
-        </article>
-
-
-        
-		
 	</template>
 	
 	<script>
 		Polymer({
 			is: "jarkko-coffee-navbar",
 			ready: function(){
-                console.log("here")
+             
 			}
 		})
 	</script>
+    
 </dom-module>
 
-
-
-
-
-
-
-
-
-
-
-
-
-<!--HamBurger Icon-->
