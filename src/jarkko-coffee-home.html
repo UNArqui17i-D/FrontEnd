@@ -22,12 +22,12 @@
 			background-color:#402501;
 		}
 		iron-autogrow-textarea{
-			display: inline-block;
-	      	width:60%;
+			display: block;
+	      	width:50%;
 	      	background:#ffffff;
 	      	padding:32px;
     		margin:0 auto;
-    		margin-top:200px;
+    		margin-top:50px;
 		}
 		img{
 			display: block;
@@ -54,6 +54,7 @@
 			background-color: var(--paper-green-500);
 			margin-right: 2em;
 		}
+
 		</style>
 
 		
@@ -63,30 +64,29 @@
 		<br><br>
 		
 		<div class="row">
-			<div class="col-sm-2">.col-sm-4</div>
-			<div class="col-sm-10">.col-sm-10</div>
-		</div>
-
-		<div>
-			<template id="usersElement" is="dom-repeat" items="{{users}}" as="u" style="width:20%">
+			<div class="col-sm-2">
+				<template id="usersElement" is="dom-repeat" items="{{users}}" as="u" style="width:20%">
 				<!--jarkko-coffe-user-card user$=[[u]]></jarkko-coffee-user-card-->
 				<paper-card elevation="1" id="card">
-			<div class="card-content layout horizontal"></div>
-			<img src$="{{https://image.freepik.com/free-icon/male-user-shadow_318-34042.jpg}}" width="80" class="flex-auto" />
-			<div class="flex-auto">
-				<span class="circle"/>
-				{{u.name}}
-			</div>
+					<div class="card-content layout horizontal"></div>
+					<img src$="{{https://image.freepik.com/free-icon/male-user-shadow_318-34042.jpg}}" width="80" class="flex-auto" />
+					<div class="flex-auto">
+						<span class="circle"/>
+						{{u.name}}
+					</div>
 				</paper-card>
 			</template>
 
-			<iron-autogrow-textarea rows="8" placeholder="Chat" value="{{chattext}}" style="">
-			</iron-autogrow-textarea>
-		</div>
-
-		<div>
-		<paper-input value="{{message}}" style="width:80%; display:block; margin:0 auto;"></paper-input>
-		<paper-button raised id="btnSend" style="width:20%; display:block; margin:0 auto;">Enviar</paper-button>
+			</div>
+			<div class="col-sm-10">
+				<iron-autogrow-textarea rows="8" placeholder="Chat" value="{{chattext}}" style="">
+				</iron-autogrow-textarea>
+				<br>
+				<div>
+					<paper-input value="{{message}}" style="width:50%; display:block; margin:0 auto;"></paper-input>
+					<paper-button raised id="btnSend" style="width:5%; display:block; margin:0 auto;">Enviar</paper-button>
+				</div>
+			</div>
 		</div>
 
 		<iron-ajax 
