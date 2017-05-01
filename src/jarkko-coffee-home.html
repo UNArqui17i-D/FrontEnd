@@ -3,8 +3,6 @@
 <link href="../bower_components/iron-form/iron-form.html" rel="import">
 <link href="../bower_components/iron-ajax/iron-ajax.html" rel="import">
 <link href="../bower_components/iron-autogrow-textarea/iron-autogrow-textarea.html" rel="import">
-<link href="../bower_components/paper-card/paper-card.html" rel="import">
-<link href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html" rel="import">
 <link rel="import" href="jarkko-coffee-user-card.html"/>
 <link rel="import" href="jarkko-coffee-navbar.html"/>
 
@@ -28,23 +26,6 @@
 	      	padding:32px;
     		margin:0 auto;
     		margin-top:50px;
-		}
-		paper-card{
-			margin: auto;  
-			position: absolute;
-			left:0;
-			right: 0;
-			top: 0;
-			bottom: 0;
-		}
-		.circle{
-			display:inline-block;
-			float:right;
-			width: 10px;
-			height: 10px;
-			border-radius: 50%;
-			background-color: var(--paper-green-500);
-			margin-right: 2em;
 		}
 		.chat_container{
 			border:2px solid #ccc!important;
@@ -84,16 +65,11 @@
 		<div class="row chat_container">
 
 			<div class="col-sm-2">
-				<template id="usersElement" is="dom-repeat" items="{{users}}" as="u" style="width:20%">
-				<!--jarkko-coffe-user-card user$=[[u]]></jarkko-coffee-user-card-->
-					<paper-card  elevation="1" id="card">
-						<div class="card-content"></div>
-						<img src$="{{https://image.freepik.com/free-icon/male-user-shadow_318-34042.jpg}}" width="80" class="flex-auto" />
-						<div class="flex-auto">
-							<span class="circle"/>
-							{{u.name}}
-						</div>
-					</paper-card>
+				<template is="dom-repeat" id="usersElement" items="{{users}}" as="u">
+
+					<jarkko-coffee-user-card user$=[[u]]>
+					</jarkko-coffee-user-card>
+
 				</template>
 			</div>
 

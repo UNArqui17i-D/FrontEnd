@@ -4,20 +4,22 @@
 <dom-module id="jarkko-coffee-user-card">
 
 	<template>
-		<style>	
+		<style include="iron-flex iron-flex-alignment">	
 		:host {
 			display: block;
 		}
 		paper-card{
-			max-width: 100%;
+			width: 100%;
 		}
 		img{
-			width:80px;
-			margin-right:1em;
+			max-width: 40px;
+			margin-right: 1em;
+			border-radius: 50%;
+			border-width: 1;
 		}
 		.circle{
-			display:inline-block;
-			float:right;
+			display: inline-block;
+			float: right;
 			width: 10px;
 			height: 10px;
 			border-radius: 50%;
@@ -27,13 +29,14 @@
 		</style>
 		
 		<paper-card elevation="1" id="card">
-		<div class="card-content layout horizontal"></div>
-		<img src$="{{https://image.freepik.com/free-icon/male-user-shadow_318-34042.jpg}}" width="80" class="flex-auto" />
-		<div class="flex-auto">
-			<span class="circle"/>
-			{{user.name}}
-		</div>
-	</paper-card>
+			<div class="card-content layout horizontal center">
+			<img src="https://image.freepik.com/free-icon/male-user-shadow_318-34042.jpg" width="80" class="flex-auto"/>
+				<div class="flex-auto">
+					<span class="circle"></span>
+					{{user.name}}
+				</div>
+			</div>
+		</paper-card>
 		
 	</template>
 	
@@ -46,6 +49,9 @@
 				}
 			},
 			ready: function(){
+				this.$.card.addEventListener("click", () => {
+					alert("Click en "+this.user.name)
+				})
 			}
 		})
 	</script>
