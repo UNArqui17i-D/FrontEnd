@@ -97,7 +97,7 @@ Chat para Arquitectura de software
         }
         this.$.login.style.display = "none";
         this.$.register.style.display = "none";
-        this.$.home.style.display = "block";
+        window.location.href = "home";
       },
       _Logout: function(){
         localStorage.removeItem("username");

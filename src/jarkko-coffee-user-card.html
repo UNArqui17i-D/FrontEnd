@@ -30,7 +30,7 @@
 		
 		<paper-card elevation="1" id="card">
 			<div class="card-content layout horizontal center">
-			<img src="https://image.freepik.com/free-icon/male-user-shadow_318-34042.jpg" width="80" class="flex-auto"/>
+			<img src="https://image.freepik.com/free-icon/male-user-shadow_318-34042.jpg" class="flex-auto"/>
 				<div class="flex-auto">
 					<span class="circle"></span>
 					{{user.name}}
@@ -46,11 +46,20 @@
 			properties: {
 				user:{
 					type: Object
+				},
+				usertoid:{
+					type: Object,
+					notify: true
+				},
+				usertoname:{
+					type: Object,
+					notify: true
 				}
 			},
 			ready: function(){
 				this.$.card.addEventListener("click", () => {
-					alert("Click en "+this.user.name)
+					this.usertoid = this.user.id;
+					this.usertoname = this.user.name;
 				})
 			}
 		})

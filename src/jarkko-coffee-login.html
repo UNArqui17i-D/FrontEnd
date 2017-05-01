@@ -82,7 +82,7 @@
 				this.$.btnToRegister.addEventListener("click",()=> this.goToRegister())
 			},
 			login: function(){
-				this.$.loginRequest.body = { "username":this.username, "password": this.password};
+				this.$.loginRequest.body = { "username":this.username, "password":this.password};
 				this.$.loginRequest.generateRequest();
 			},
 			goToRegister: function(){
