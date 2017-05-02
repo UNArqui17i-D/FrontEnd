@@ -1,97 +1,91 @@
-<html><head><link href="../bower_components/paper-button/paper-button.html" rel="import">
-<link href="../bower_components/paper-input/paper-input.html" rel="import">
-<link href="../bower_components/iron-form/iron-form.html" rel="import">
-<link href="../bower_components/iron-ajax/iron-ajax.html" rel="import">
-<link href="../bower_components/iron-autogrow-textarea/iron-autogrow-textarea.html" rel="import">
+<html><head><link rel="import" href="jarkko-coffee-chats.html">
+<link rel="import" href="jarkko-coffee-lobby.html">
+
 
 </head><body><dom-module id="jarkko-coffee-home">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
 
-	<template>
-		<style>
-		:host {
-			display: block;
-		}
-		paper-button{
-			display: block;
-			color:white;
-			margin:1em 0 0 0;
-			background-color:#402501;
-		}
-		iron-autogrow-textarea{
-			display: block;
-	      	width:80%;
-	      	background:#ffffff;
-	      	padding:32px;
-    		margin:0 auto;
-    		margin-top:200px;
-		}
-		img{
-			display: block;
-			width:50%;
-			height:10%;
-			margin:0 auto;
-		}
-		</style>
 
-		<paper-button raised="" id="btnLogout" style="float: right">Salir</paper-button>
+	<nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">
+                    <img width="140px" src="../images/logo.png">
+                </a>
+            </div>
+            <ul class="nav navbar-nav" style="float: right">
+                <li class="dropdown">
+                 
+                    <a href="#" class="dropdown-toggle" style="margin-right:66px !important" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Menú<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Perfil</a></li>
+                        <li id="btnLobby"><a href="#">Lobby</a></li>
+                        <li id="btnChats" style="display:none"><a href="#">Chats</a></li>
+                        <li id="btnLogout"><a href="#">Salir</a></li>
+                    </ul>
+                </li>
+            </ul>                
+        </div>
+    </nav><br><br>
 
-	<br>
-		<iron-autogrow-textarea rows="10" placeholder="Chat" value="{{chattext}}">
-		</iron-autogrow-textarea>
+    <jarkko-coffee-chats id="chats" tolobby="{{tolobby}}"></jarkko-coffee-chats>
+    <jarkko-coffee-lobby id="lobby" tochats="{{tochats}}" style="display:none"></jarkko-coffee-lobby>
 
-		<div>
-		<paper-input value="{{message}}" style="width:80%; display:block; margin:0 auto"></paper-input>
-		<paper-button raised="" id="btnSend" style="width:20%; display:block; margin:0 auto">Enviar</paper-button>
-		</div>
 
-		<iron-ajax id="logoutRequest" method="DELETE" on-response="logoutResponse">
-		</iron-ajax>
 
-		<iron-ajax id="sendRequest" url="http://192.168.99.101:4005/Chat_ms/Api/Message" method="POST" content-type="application/json" handle-as="json" on-response="sendResponse">
-		</iron-ajax>
-		
-	</template>
-	
-	<script>
-		Polymer({
-			is: "jarkko-coffee-home",
-			properties: {
-				username: String,
-				password: String,
-				user:{
-					type: Object,
-					notify: false
-				},
-				session:{
-					type: Object,
-					notify: false
-				},
-				logout:{
-					type: Object,
-					notify: true
-				}
+	<iron-ajax id="logoutRequest" method="DELETE" on-response="logoutResponse">
+	</iron-ajax>
+  </template>
+
+  <script>
+    Polymer({
+		is: 'jarkko-coffee-home',
+		properties:{
+			tolobby:{
+				type: Object,
+				observer: "_GoToLobby"
 			},
-			ready: function(){
-				this.$.btnLogout.addEventListener("click",()=> this.evtLogout())
-				this.$.btnSend.addEventListener("click",()=> this.evtSend())
+			tochats:{
+				type: Object,
+				observer: "_GoToChats"
 			},
-			evtLogout: function(){
-				this.$.logoutRequest.url = "http://192.168.99.101:4000/authentication/resources/sessions/" + localStorage.getItem("userId");
-				this.$.logoutRequest.generateRequest();
-			},
-			evtSend: function(){
-				this.$.sendRequest.body = { "message":this.message, "userfrom":localStorage.getItem("userId"), "userto":2};
-				this.$.sendRequest.generateRequest();
-			},
-			logoutResponse: function(data){
-				this.user = null;
-				this.session = null;
-				this.logout = !this.logout;
-			},
-			sendResponse: function(data){
-				this.chattext = this.chattext + "\n"+this.message;
-				this.message = "";
+			logout:{
+				type: Object,
+				notify: true
 			}
-		})
-	</script>
-</dom-module></body></html>
+		},
+		ready: function(){
+			this.$.btnChats.addEventListener("click",()=> this.evtToChats());
+			this.$.btnLobby.addEventListener("click",()=> this.evtToLobby());
+			this.$.btnLogout.addEventListener("click",()=> this.evtLogout());
+		},
+		evtToChats: function(){
+			this.$.chats.style.display = "block";
+			this.$.lobby.style.display = "none";
+			this.$.btnChats.style.display = "none";
+			this.$.btnLobby.style.display = "block";
+		},
+		evtToLobby: function(){
+			this.$.chats.style.display = "none";
+			this.$.lobby.style.display = "block";
+			this.$.btnChats.style.display = "block";
+			this.$.btnLobby.style.display = "none";
+		},
+		evtLogout: function(){
+			this.$.logoutRequest.url = "http://192.168.99.101:4000/authentication/resources/sessions/" + localStorage.getItem("userId");
+			this.$.logoutRequest.generateRequest();
+		},
+		logoutResponse: function(data){
+			if(data.detail.status == 200){
+				this.logout = !this.logout;
+			}
+		}
+    });
+  </script>
+</dom-module>
+</body></html>

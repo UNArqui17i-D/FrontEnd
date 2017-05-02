@@ -13,4 +13,5 @@ EXPOSE 5000
 RUN mkdir -p /usr/src/app
 COPY . /usr/src/app
 WORKDIR /usr/src/app
+CMD ["bower", "install"] 
 CMD ["polymer", "serve", "--hostname", "0.0.0.0"] 

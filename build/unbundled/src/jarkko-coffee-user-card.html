@@ -1,0 +1,67 @@
+<html><head><link href="../bower_components/paper-card/paper-card.html" rel="import">
+<link href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html" rel="import">
+
+</head><body><dom-module id="jarkko-coffee-user-card">
+
+	<template>
+		<style include="iron-flex iron-flex-alignment">	
+		:host {
+			display: block;
+		}
+		paper-card{
+			width: 100%;
+		}
+		img{
+			max-width: 40px;
+			margin-right: 1em;
+			border-radius: 50%;
+			border-width: 1;
+		}
+		.circle{
+			display: inline-block;
+			float: right;
+			width: 10px;
+			height: 10px;
+			border-radius: 50%;
+			background-color: var(--paper-green-500);
+			margin-right: 2em;
+		}
+		</style>
+		
+		<paper-card elevation="1" id="card">
+			<div class="card-content layout horizontal center">
+			<img src="https://image.freepik.com/free-icon/male-user-shadow_318-34042.jpg" class="flex-auto">
+				<div class="flex-auto">
+					<span class="circle"></span>
+					{{user.name}}
+				</div>
+			</div>
+		</paper-card>
+		
+	</template>
+	
+	<script>
+		Polymer({
+			is: "jarkko-coffee-user-card",
+			properties: {
+				user:{
+					type: Object
+				},
+				usertoid:{
+					type: Object,
+					notify: true
+				},
+				usertoname:{
+					type: Object,
+					notify: true
+				}
+			},
+			ready: function(){
+				this.$.card.addEventListener("click", () => {
+					this.usertoid = this.user.id;
+					this.usertoname = this.user.name;
+				})
+			}
+		})
+	</script>
+</dom-module></body></html>
