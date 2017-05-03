@@ -5,6 +5,7 @@
 <link rel="import" href="../bower_components/iron-autogrow-textarea/iron-autogrow-textarea.html">
 <link rel="import" href="../bower_components/pubnub-polymer/pubnub-element.html">
 <link rel="import" href="jarkko-coffee-user-card.html"/>
+<link rel="import" href="jarkko-coffee-message-card.html"/>
 <link rel="import" href="jarkko-coffee-navbar.html"/>
 
 <dom-module id="jarkko-coffee-chats">
@@ -20,23 +21,17 @@
 			margin:1em 0 0 0;
 			background-color:#402501;
 		}
-		iron-autogrow-textarea{
-			display: block;
-	      	width:50%;
-	      	background:#ffffff;
-	      	padding:32px;
-    		margin:0 auto;
-    		margin-top:50px;
-		}
 		.chat_container{
-			border:2px solid #ccc!important;
+			border:1px solid #ccc!important;
 			border-color:#402501!important;
 			width:90%;
 			margin:auto;
 		}
 		.chat_panel{
-			border-left:2px solid #ccc!important;
+			padding-left: 32px;
+			border-left:1px solid #ccc!important;
 			border-color:#402501!important;
+			background-color: white;
 		}
 		</style>
 		
@@ -52,11 +47,18 @@
 			</div>
 
 			<div class="col-sm-10 chat_panel">
-				<iron-autogrow-textarea disabled rows="20" placeholder="Chat" value="{{chattext}}" style="">
-				</iron-autogrow-textarea>
+
+					<template is="dom-repeat" id="messagesElement" items="{{messages}}" as="m" style="background-color: white;">
+
+						<jarkko-coffee-message-card message$=[[m]]>
+						</jarkko-coffee-message-card>
+
+					</template>
+				<!--iron-autogrow-textarea disabled rows="20" placeholder="Chat" value="{{chattext}}" style="">
+				</iron-autogrow-textarea-->
 				<br>
 				<div>
-					<paper-input value="{{message}}" style="width:50%; display:block; margin:0 auto;"></paper-input>
+					<paper-input value="{{message}}" style="width:80%; display:block; margin:0 auto;"></paper-input>
 					<paper-button raised id="btnSend" style="width:5%; display:block; margin:0 auto; margin-bottom:10px;">Enviar</paper-button>
 				</div>
 			</div>
@@ -135,6 +137,10 @@
 					type: Array,
 					value: function(){ return []}
 				},
+				messages:{
+					type: Array,
+					value: function(){ return []}
+				},
 				uuid:{
 					type: Object
 				},
@@ -181,14 +187,17 @@
 			},
 			getChatResponse: function(data){
 				this.uuid = parseInt(localStorage.getItem("userId"))+":"+parseInt(localStorage.getItem("userToId"));
-				this.chattext = "";
+				this.splice("messages", 0, this.messages.length);
 				var i = 0;
 				for(i =0; i<data.detail.response.data.length; i++){
 					if(parseInt(localStorage.getItem("userId")) == data.detail.response.data[i].userfrom){
-						this.chattext = this.chattext + localStorage.getItem("name") +": "+data.detail.response.data[i].message+"\n";
+						data.detail.response.data[i].color = "#3FD93A";
+						data.detail.response.data[i].align = "right";
 					}else{
-						this.chattext = this.chattext + localStorage.getItem("userToName") +": "+data.detail.response.data[i].message+"\n";
+						data.detail.response.data[i].color = "#8B8B8B";
+						data.detail.response.data[i].align = "left";
 					}
+					this.push("messages", data.detail.response.data[i]);
 				}
 			},
 			getUsersResponse: function(data){
@@ -208,13 +217,11 @@
 			},
 			_UserToId: function(){
             	localStorage.setItem("userToId", this.usertoid);
-				//this.$.getUserRequest.url = this.$.getUserRequest.url + parseInt(localStorage.getItem("usertoid"));
 			},
 			_UserToName: function(){
             	localStorage.setItem("userToName", this.usertoname);
 				this.$.getChatRequest.url = "http://192.168.99.101:4005/Chat_ms/Api/Chat/" + parseInt(localStorage.getItem("userId")) + "&" + parseInt(localStorage.getItem("userToId"));
 				this.$.getChatRequest.generateRequest();
-				//this.$.getUserRequest.url = this.$.getUserRequest.url + parseInt(localStorage.getItem("usertoid"));
 			},
 			sendError: function(data){
 				this.chattext = "No se pudo enviar el mensaje, ERROR DE CORS!!!!!!";

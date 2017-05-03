@@ -1,0 +1,45 @@
+﻿<link href="../bower_components/paper-card/paper-card.html" rel="import">
+<link href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html" rel="import">
+
+<dom-module id="jarkko-coffee-message-card">
+
+	<template>
+		<style include="iron-flex iron-flex-alignment">	
+		:host {
+			display: block;
+		}
+		paper-card{
+			width: 100%;
+			background-color: transparent;
+			box-shadow: 0px;
+			margin: -16px;
+		}
+		.message{
+			margin: 2px;
+			border-radius: 10px;
+		}
+		</style>
+		
+		<paper-card elevation="0"; id="card">
+			<div class="card-content layout horizontal center message" style="background-color: {{message.color}}; float: {{message.align}}">
+				<div class="flex-auto">
+					{{message.message}}
+				</div>
+			</div>
+		</paper-card>
+		
+	</template>
+	
+	<script>
+		Polymer({
+			is: "jarkko-coffee-message-card",
+			properties: {
+				message:{
+					type: Object
+				}
+			},
+			ready: function(){
+			}
+		})
+	</script>
+</dom-module>
