@@ -71,7 +71,7 @@
 			subscribe_key="sub-c-9fe9c042-2f92-11e7-bd21-0619f8945a4f" 
 			uuid="{{uuid}}">
 
-			<core-pubnub-publish id="pub" channel="polymer-chat" message="Hello">
+			<core-pubnub-publish id="pub" channel="polymer-chat">
 			</core-pubnub-publish>
 
 			<core-pubnub-subscribe 
@@ -154,7 +154,6 @@
 				}
 			},
 			ready: function(){
-				this.chattext = "";
 				this.$.btnSend.addEventListener("click",()=> this.evtSend())
 				this.$.getUsersRequest.generateRequest();
 			},
@@ -163,6 +162,7 @@
 
 				this.$.sendRequest.body = { "message":this.message, "userfrom":parseInt(localStorage.getItem("userId")), "userto":parseInt(localStorage.getItem("userToId"))};
 				this.$.sendRequest.generateRequest();
+				this.message = "";
 			},
 			logoutResponse: function(data){
 				this.user = null;
@@ -173,17 +173,18 @@
 
 				this.$.pub.message = {
 					uuid: this.uuid,
-					text: this.message
+					text: data.detail.response.data.message
 				};
 				this.$.pub.publish();
 
 				if(parseInt(localStorage.getItem("userId")) == data.detail.response.data.userfrom){
-					this.chattext = this.chattext + localStorage.getItem("name")+": "+this.message+ "\n";
-					this.message = "";
+					data.detail.response.data.color = "#3FD93A";
+					data.detail.response.data.align = "right";
 				}else{
-					this.chattext = this.chattext +localStorage.getItem("userToName")+": "+this.message+ "\n";
-					this.message = "";
+					data.detail.response.data.color = "#8B8B8B";
+					data.detail.response.data.align = "left";
 				}
+				this.push("messages", data.detail.response.data);
 			},
 			getChatResponse: function(data){
 				this.uuid = parseInt(localStorage.getItem("userId"))+":"+parseInt(localStorage.getItem("userToId"));
@@ -207,9 +208,13 @@
 				}
 			},
 			subscriptionCallback: function(e){
-				if(parseInt(localStorage.getItem("userId")) != e.detail.uuid[0]){
-					this.chattext = this.chattext +localStorage.getItem("userToName")+": "+e.detail.text+ "\n";
-					this.message = "";
+				if(e.detail.uuid !== undefined){
+					if(parseInt(localStorage.getItem("userId")) != e.detail.uuid[0]){
+						e.detail.message = e.detail.text;
+						e.detail.color = "#8B8B8B";
+						e.detail.align = "left";
+						this.push("messages", e.detail);
+					}
 				}
 			},
 			_Lobby: function(){ 
