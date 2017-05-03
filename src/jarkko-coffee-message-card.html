@@ -12,16 +12,17 @@
 			width: 100%;
 			background-color: transparent;
 			box-shadow: 0px;
-			margin: -16px;
 		}
 		.message{
-			margin: 2px;
 			border-radius: 10px;
+			padding:8px 16px 8px 16px;
+			margin-right: 16px;
+			margin-left: 16px;
 		}
 		</style>
 		
 		<paper-card elevation="0"; id="card">
-			<div class="card-content layout horizontal center message" style="background-color: {{message.color}}; float: {{message.align}}">
+			<div class="message" style="background-color: {{message.color}}; float: {{message.align}};">
 				<div class="flex-auto">
 					{{message.message}}
 				</div>
