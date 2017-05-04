@@ -57,10 +57,9 @@
 
 			<div class="col-sm-10 chat_panel" style="height:100%;">
 
-				<paper-scroll-header-panel class="flex">
+				<paper-scroll-header-panel id="scrollMessages" fixed class="flex">
 
 					<paper-toolbar>
-
                     	<div>{{usertoname}}</div>	
 					</paper-toolbar>
 
@@ -208,6 +207,7 @@
 					data.detail.response.data.align = "left";
 				}
 				this.push("messages", data.detail.response.data);
+				this.$.scrollMessages.scroll(51*this.messages.length, true);
 			},
 			getChatResponse: function(data){
 				this.uuid = parseInt(localStorage.getItem("userId"))+":"+parseInt(localStorage.getItem("userToId"));
@@ -223,6 +223,7 @@
 					}
 					this.push("messages", data.detail.response.data[i]);
 				}
+				this.$.scrollMessages.scroll(51*this.messages.length, true);
 			},
 			getUsersResponse: function(data){
 				var i = 0;
@@ -238,6 +239,7 @@
 						e.detail.align = "left";
 						this.push("messages", e.detail);
 					}
+					this.$.scrollMessages.scroll(51*this.messages.length, true);
 				}
 			},
 			unsubscriptionCallback: function(e){
