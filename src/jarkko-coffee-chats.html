@@ -82,19 +82,23 @@
 
 
 		<core-pubnub
+			id="pubnub"
 			publish_key="pub-c-02c34d6a-36a4-42a2-ab9f-66c8d0cc8e0f"
 			subscribe_key="sub-c-9fe9c042-2f92-11e7-bd21-0619f8945a4f" 
 			uuid="{{uuid}}">
 
-			<core-pubnub-publish id="pub" channel="polymer-chat">
-			</core-pubnub-publish>
-
 			<core-pubnub-subscribe 
-				channel="polymer-chat" 
-				id="sub" 
-				messages="{{messages}}" 
+				channel="my_chat"
+				id="sub"
 				on-callback="subscriptionCallback">
-			</core-pubnub-subscribe> 
+
+				<core-pubnub-publish
+					id="pub"
+					channel="my_chat"
+					message="Publicando">
+				</core-pubnub-publish>
+			</core-pubnub-subscribe>
+
 		</core-pubnub>
 
 
@@ -158,6 +162,10 @@
 				},
 				uuid:{
 					type: Object
+				},
+				channel:{
+					type: Object,
+					value: "my_chat"
 				},
 				usertoid:{
 					type: Object,
@@ -232,6 +240,9 @@
 					}
 				}
 			},
+			unsubscriptionCallback: function(e){
+				alert("Unsubscribed")
+			},
 			_Lobby: function(){ 
 				alert("Holi desde lobby :D")
 			},
@@ -242,6 +253,11 @@
             	localStorage.setItem("userToName", this.usertoname);
 				this.$.getChatRequest.url = "http://192.168.99.101:4005/Chat_ms/Api/Chat/" + parseInt(localStorage.getItem("userId")) + "&" + parseInt(localStorage.getItem("userToId"));
 				this.$.getChatRequest.generateRequest();
+				if(parseInt(localStorage.getItem("userId")) < parseInt(localStorage.getItem("userToId"))){
+					this.channel = parseInt(localStorage.getItem("userId")) + "&" + parseInt(localStorage.getItem("userToId"));
+				}else{
+					this.channel = parseInt(localStorage.getItem("userToId")) + "&" + parseInt(localStorage.getItem("userId"));
+				}
 			},
 			sendError: function(data){
 				this.chattext = "No se pudo enviar el mensaje, ERROR DE CORS!!!!!!";
