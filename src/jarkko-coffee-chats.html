@@ -110,12 +110,6 @@
 		</iron-ajax>
 
 		<iron-ajax 
-			id="getUserRequest"
-			url="http://192.168.99.101:4000/authentication/resources/users"
-			on-response="getUserResponse">
-		</iron-ajax>
-
-		<iron-ajax 
 			id="getUsersRequest"
 			url="http://192.168.99.101:4000/authentication/resources/users"
 			on-response="getUsersResponse">
@@ -241,12 +235,6 @@
 					}
 					this.$.scrollMessages.scroll(51*this.messages.length, true);
 				}
-			},
-			unsubscriptionCallback: function(e){
-				alert("Unsubscribed")
-			},
-			_Lobby: function(){ 
-				alert("Holi desde lobby :D")
 			},
 			_UserToId: function(){
             	localStorage.setItem("userToId", this.usertoid);
