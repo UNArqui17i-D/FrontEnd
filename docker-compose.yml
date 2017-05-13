@@ -1,4 +1,5 @@
 jarkko-coffee:
-  build: .
+  #build: .
+  image: jaquinonesg/jarkko_frontend
   ports:
     - "5000:8081"

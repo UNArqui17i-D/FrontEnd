@@ -1,0 +1,4 @@
+version: '2'
+services:
+  jarkko-coffee:
+    scale: 2
