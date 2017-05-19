@@ -1,4 +1,4 @@
-﻿<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../bower_components/iron-form/iron-form.html">
 <link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
@@ -47,6 +47,8 @@
 		<div class="row chat_container" style="height:100%;">
 
 			<div class="col-sm-2">
+				<!--jarkko-coffee-user-header user={{user}}></jarkko-coffee-user-header-->
+				
 				<template is="dom-repeat" id="usersElement" items="{{users}}" as="u">
 
 					<jarkko-coffee-user-card user$=[[u]] usertoid={{usertoid}} usertoname={{usertoname}}>
@@ -63,12 +65,12 @@
                     	<div>{{usertoname}}</div>	
 					</paper-toolbar>
 
-						<template is="dom-repeat" id="messagesElement" items="{{messages}}" as="m" style="background-color: white;">
+					<template is="dom-repeat" id="messagesElement" items="{{messages}}" as="m" style="background-color: white;">
 
-							<jarkko-coffee-message-card message$=[[m]]>
-							</jarkko-coffee-message-card>
+						<jarkko-coffee-message-card message$=[[m]]>
+						</jarkko-coffee-message-card>
 
-						</template>
+					</template>
 				</paper-scroll-header-panel>
 				<br>
 				<div>
@@ -111,14 +113,14 @@
 
 		<iron-ajax 
 			id="getUsersRequest"
-			url="http://192.168.99.101:4000/authentication/resources/users"
+			url="http://192.168.99.101:21000/authentication/resources/users"
 			on-response="getUsersResponse">
 		</iron-ajax>
 
 		<iron-ajax 
 			id="sendRequest"
 			accept="*"
-			url="http://192.168.99.101:4005/Chat_ms/Api/Message"
+			url="http://192.168.99.101:22000/Chat_ms/Api/Message"
 			method="POST"
 			non-http-request="true"
         	content-type="application/json"
@@ -130,7 +132,7 @@
 
 		
 	</template>
-	
+	 
 	<script>
 		Polymer({
 			is: "jarkko-coffee-chats",
@@ -241,7 +243,7 @@
 			},
 			_UserToName: function(){
             	localStorage.setItem("userToName", this.usertoname);
-				this.$.getChatRequest.url = "http://192.168.99.101:4005/Chat_ms/Api/Chat/" + parseInt(localStorage.getItem("userId")) + "&" + parseInt(localStorage.getItem("userToId"));
+				this.$.getChatRequest.url = "http://192.168.99.101:22000/Chat_ms/Api/Chat/" + parseInt(localStorage.getItem("userId")) + "&" + parseInt(localStorage.getItem("userToId"));
 				this.$.getChatRequest.generateRequest();
 				if(parseInt(localStorage.getItem("userId")) < parseInt(localStorage.getItem("userToId"))){
 					this.channel = parseInt(localStorage.getItem("userId")) + "&" + parseInt(localStorage.getItem("userToId"));

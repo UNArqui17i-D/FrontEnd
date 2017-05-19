@@ -1,8 +1,7 @@
 ﻿<link href="../bower_components/paper-card/paper-card.html" rel="import">
-<link href="../bower_components/paper-card/paper-card.html" rel="import">
 <link href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html" rel="import">
 
-<dom-module id="jarkko-coffee-message-card">
+<dom-module id="jarkko-coffee-user-header">
 
 	<template>
 		<style include="iron-flex iron-flex-alignment">	
@@ -15,17 +14,17 @@
 			box-shadow: 0px;
 		}
 		.message{
-			border-radius: 10px;
+			border-radius: 0px;
 			padding:8px 16px 8px 16px;
-			margin-right: 16px;
-			margin-left: 16px;
+			margin-right: 0px;
+			margin-left: 0px;
 		}
 		</style>
 		
 		<paper-card elevation="0"; id="card">
 			<div class="message" style="background-color: {{message.color}}; float: {{message.align}};">
 				<div class="flex-auto">
-					{{message.message}}
+					{{user.name}}
 				</div>
 			</div>
 		</paper-card>
@@ -34,13 +33,14 @@
 	
 	<script>
 		Polymer({
-			is: "jarkko-coffee-message-card",
+			is: "jarkko-coffee-user-header",
 			properties: {
-				message:{
+				user:{
 					type: Object
 				}
 			},
 			ready: function(){
+				this.user.name = localStorage.getItem("name");
 			}
 		})
 	</script>

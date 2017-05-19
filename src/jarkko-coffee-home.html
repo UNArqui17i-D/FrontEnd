@@ -80,7 +80,7 @@
 			this.$.btnLobby.style.display = "none";
 		},
 		evtLogout: function(){
-			this.$.logoutRequest.url = "http://192.168.99.101:4000/authentication/resources/sessions/" + localStorage.getItem("userId");
+			this.$.logoutRequest.url = "http://192.168.99.101:21000/authentication/resources/sessions/" + localStorage.getItem("userId");
 			this.$.logoutRequest.generateRequest();
 		},
 		logoutResponse: function(data){
