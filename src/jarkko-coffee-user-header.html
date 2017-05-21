@@ -7,24 +7,27 @@
 		<style include="iron-flex iron-flex-alignment">	
 		:host {
 			display: block;
+			background: #402501;
+			padding-top: 100px;
+			font
 		}
 		paper-card{
 			width: 100%;
 			background-color: transparent;
 			box-shadow: 0px;
 		}
-		.message{
-			border-radius: 0px;
-			padding:8px 16px 8px 16px;
-			margin-right: 0px;
-			margin-left: 0px;
+		.text{
+			color: #ffffff;
 		}
 		</style>
 		
 		<paper-card elevation="0"; id="card">
-			<div class="message" style="background-color: {{message.color}}; float: {{message.align}};">
-				<div class="flex-auto">
-					{{user.name}}
+			<div>
+				<div class="flex-auto text" style="padding-left:16px;">
+					{{name}}
+				</div>
+				<div class="flex-auto text" style="padding-bottom:16px; padding-left:16px; font-size: 80%">
+					{{email}}
 				</div>
 			</div>
 		</paper-card>
@@ -35,12 +38,16 @@
 		Polymer({
 			is: "jarkko-coffee-user-header",
 			properties: {
-				user:{
+				name:{
+					type: Object
+				},
+				email:{
 					type: Object
 				}
 			},
 			ready: function(){
-				this.user.name = localStorage.getItem("name");
+				this.name = localStorage.getItem("name");
+				this.email = localStorage.getItem("email");
 			}
 		})
 	</script>
