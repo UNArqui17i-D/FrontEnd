@@ -41,7 +41,7 @@ Your application is already set up to be tested via [web-component-tester](https
 
 For run in Chromium Browser in Lunix use this command from terminal for open browser
 ```
-$ chromium-browser --disable-web-security --user-data-dir
+Chromium-browser --disable-web-security --user-data-dir
 ```
 
 For Windows, run in command prompt the command
@@ -53,5 +53,5 @@ Using the URL for Chrome installation
 
 For OSx, run this command
 ```
-$ open -a Google\ Chrome --args --disable-web-security --user-data-dir
+open -a Google\ Chrome --args --disable-web-security --user-data-dir
 ```

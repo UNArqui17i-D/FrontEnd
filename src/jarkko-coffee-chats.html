@@ -89,7 +89,7 @@
 				</paper-scroll-header-panel>
 				<br>
 				<div class="flex-auto">
-					<paper-input class="box_message" value="{{message}}" style="width:80%; display:block; margin:0 auto; "></paper-input>
+					<paper-input id="inpSend" class="box_message" value="{{message}}" style="width:80%; display:block; margin:0 auto; "></paper-input>
 					<paper-button raised id="btnSend" style="width:5%; display:block; margin:0 auto; margin-bottom:10px;">Enviar</paper-button>
 				</div>
 			</div>
@@ -188,6 +188,7 @@
 			},
 			ready: function(){
 				this.$.btnSend.addEventListener("click",()=> this.evtSend())
+				this.$.inpSend.addEventListener("keypress",(evt)=> this.evtInpSend(evt))
 				this.$.getUsersRequest.generateRequest();
 			},
 			evtSend: function(){
@@ -196,6 +197,11 @@
 				this.$.sendRequest.body = { "message":this.message, "userfrom":parseInt(localStorage.getItem("userId")), "userto":parseInt(localStorage.getItem("userToId"))};
 				this.$.sendRequest.generateRequest();
 				this.message = "";
+			},
+			evtInpSend: function(evt){
+				if (evt.keyCode == 13) {
+					this.evtSend();
+				}
 			},
 			logoutResponse: function(data){
 				this.user = null;
